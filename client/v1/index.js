@@ -30,6 +30,11 @@ console.log(MY_FAVORITE_DEALERS[0]);
 // 1. Create a new variable and assign it the link of the lego set with the highest reduction I can find on these 2 websites
 // 2. Log the variable
 
+console.log('🎯 TODO 1: The highest reduction')
+const highestReductionLink = 'https://www.dealabs.com/bons-plans/jeu-de-construction-lego-embuscade-sur-mandalore-battle-pack-75373-2972582';
+console.log('Link to the LEGO set with the highest reduction:', highestReductionLink);
+
+
 /**
  * 🧱
  * Easy 😁?
@@ -43,28 +48,60 @@ console.log(MY_FAVORITE_DEALERS[0]);
 // 1. Create a variable and assign it the number of deals
 // 2. Log the variable
 
+console.log('🎯 TODO 2: Number of deals')
+const numberOfDeals = deals.length;
+console.log('Number of deals:', numberOfDeals);
+
+
 // 🎯 TODO 3: Website name
 // 1. Create a variable and assign it the list of shopping community name only
 // 2. Log the variable
 // 3. Log how many shopping communities we have
+
+console.log('🎯 TODO 3: Website name')
+const uniqueCommunities = [...new Set(deals.map(deal => deal.community))];
+console.log('Communautés distinctes de shopping:', uniqueCommunities);
+console.log('Nombre de communautés distinctes:', uniqueCommunities.length);
+
 
 // 🎯 TODO 4: Sort by price
 // 1. Create a function to sort the deals by price
 // 2. Create a variable and assign it the list of sets by price from lowest to highest
 // 3. Log the variable
 
+console.log('🎯 TODO 4: Sort by price')
+function sortDealsByPrice(deals) {
+    return deals.sort((a, b) => a.price - b.price);
+}
+
+// 2. Créer une variable et assigner la liste des deals triée par prix, du plus bas au plus élevé
+const sortedDeals = sortDealsByPrice(deals);
+
+// 3. Afficher la variable dans la console
+console.log('Deals triés par prix (du plus bas au plus élevé):', sortedDeals);
+
+
 // 🎯 TODO 5: Sort by date
 // 1. Create a function to sort the deals by date
 // 2. Create a variable and assign it the list of deals by date from recent to old
 // 3. Log the variable
 
+console.log('🎯 TODO 5: Sort by date')
+
+
 // 🎯 TODO 6: Filter a specific percentage discount range
 // 1. Filter the list of deals between 50% and 75%
 // 2. Log the list
 
+console.log('🎯 TODO 6: Filter a specific percentage discount range')
+
+
 // 🎯 TODO 7: Average percentage discount
 // 1. Determine the average percentage discount of the deals
 // 2. Log the average
+
+console.log('🎯 TODO 7: Average percentage discount')
+
 
 /**
  * 🏎
@@ -74,7 +111,7 @@ console.log(MY_FAVORITE_DEALERS[0]);
  */
 
 // 🎯 TODO 8: Deals by community
-// 1. Create an object called `communities` to manipulate deals by community name 
+// 1. Create an object called `communities` to manipulate deals by community name
 // The key is the community name
 // The value is the array of deals for this specific community
 //
@@ -89,13 +126,22 @@ console.log(MY_FAVORITE_DEALERS[0]);
 // 2. Log the variable
 // 3. Log the number of deals by community
 
+console.log('🎯 TODO 8: Deals by community')
+
+
 // 🎯 TODO 9: Sort by price for each community
 // 1. For each community, sort the deals by discount price, from highest to lowest
 // 2. Log the sort
 
+console.log('🎯 TODO 9: Sort by price for each community')
+
+
 // 🎯 TODO 10: Sort by date for each community
 // 1. For each set, sort the deals by date, from old to recent
 // 2. Log the sort
+
+console.log('🎯 TODO 10: Sort by date for each community')
+
 
 
 /**
@@ -389,13 +435,22 @@ const VINTED = [
 // 3. Compute the p25 price value of the listing
 // The p25 value (25th percentile) is the lower value expected to be exceeded in 25% of the vinted items
 
+console.log('🎯 TODO 11: Compute the average, the p5 and the p25 price value')
+
+
 // 🎯 TODO 12: Very old listed items
 // // 1. Log if we have very old items (true or false)
 // // A very old item is an item `published` more than 3 weeks ago.
 
+console.log('🎯 TODO 12: Very old listed items')
+
+
 // 🎯 TODO 13: Find a specific item
 // 1. Find the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
 // 2. Log the item
+
+console.log('🎯 TODO 13: Find a specific item')
+
 
 // 🎯 TODO 14: Delete a specific item
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
