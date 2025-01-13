@@ -70,15 +70,17 @@ console.log('Nombre de communautés distinctes:', uniqueCommunities.length);
 // 3. Log the variable
 
 console.log('🎯 TODO 4: Sort by price')
+// 1. Create a function to sort the deals by price
 function sortDealsByPrice(deals) {
     return deals.sort((a, b) => a.price - b.price);
 }
 
-// 2. Créer une variable et assigner la liste des deals triée par prix, du plus bas au plus élevé
+// 2. Create a variable and assign it the list of sets by price from lowest to highest
 const sortedDeals = sortDealsByPrice(deals);
 
-// 3. Afficher la variable dans la console
-console.log('Deals triés par prix (du plus bas au plus élevé):', sortedDeals);
+// 3. Log the variable
+console.log('Deals triés par prix (du plus bas au plus élevé):');
+console.table(sortedDeals);
 
 
 // 🎯 TODO 5: Sort by date
@@ -87,6 +89,18 @@ console.log('Deals triés par prix (du plus bas au plus élevé):', sortedDeals)
 // 3. Log the variable
 
 console.log('🎯 TODO 5: Sort by date')
+
+// 1. Create a function to sort the deals by date
+function sortDealsByDate(deals) {
+    return deals.sort((a, b) => new Date(b.published) - new Date(a.published));
+}
+
+// 2. Create a variable and assign it the list of deals sorted by date, from recent to old
+const sortedByDate = sortDealsByDate(deals);
+
+// 3. Log the variable
+console.log('Deals sorted by date (recent to old):');
+console.table(sortedByDate);
 
 
 // 🎯 TODO 6: Filter a specific percentage discount range
