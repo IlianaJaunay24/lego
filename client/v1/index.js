@@ -603,18 +603,34 @@ camera.favorite = true;
 // 1. Log `sealedCamera` and `camera` variables
 // 2. What do you notice?
 
+console.log('🎯 TODO 15: Save a favorite item');
+
+// 1. Log `sealedCamera` and `camera` variables
+console.log('sealedCamera:', sealedCamera);
+console.log('camera:', camera);
+
+// 2. What do you notice?
+console.log('Observation: Both `sealedCamera` and `camera` now have `favorite: true`');
+
 // we make (again) a new assignment again
 sealedCamera = {
-  link: "https://www.vinted.fr/items/5563396347-lego-43230-omaggio-a-walter-disney-misb",
-  price: "131.95",
-  title: "LEGO 43230 omaggio a Walter Disney misb",
-  published: "Thu, 26 Dec 2024 21:18:04 GMT",
-  uuid: "18751705-536e-5c1f-9a9d-383a3a629df5"
+    link: "https://www.vinted.fr/items/5563396347-lego-43230-omaggio-a-walter-disney-misb",
+    price: "131.95",
+    title: "LEGO 43230 omaggio a Walter Disney misb",
+    published: "Thu, 26 Dec 2024 21:18:04 GMT",
+    uuid: "18751705-536e-5c1f-9a9d-383a3a629df5"
 };
 
 // 3. Update `camera` property with `favorite` to true WITHOUT changing sealedCamera properties
 
-console.log('🎯 TODO 15: Save a favorite item')
+// Deep copy `sealedCamera` to `camera` and modify
+camera = { ...sealedCamera, favorite: true };
+
+// Log `sealedCamera` and `camera` after deep copy and modification
+console.log('After reassignment and deep copy:');
+console.log('sealedCamera:', sealedCamera);
+console.log('camera:', camera);
+
 
 
 
@@ -630,7 +646,7 @@ const deal = {
 // 1. Compute the potential highest profitability based on the VINTED items
 // 2. Log the value
 
-console.log('🎯 TODO 16: Compute the profitability')
+console.log('🎯 TODO 16: Compute the profitability');
 
 
 
