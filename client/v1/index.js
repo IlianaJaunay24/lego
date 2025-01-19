@@ -499,6 +499,27 @@ const VINTED = [
 
 console.log('🎯 TODO 11: Compute the average, the p5 and the p25 price value')
 
+// Extract and sort the prices
+const prices = VINTED.map(item => parseFloat(item.price)).sort((a, b) => a - b);
+
+// Compute the average price
+const averagePrice = prices.reduce((sum, price) => sum + price, 0) / prices.length;
+
+// Helper function to calculate percentiles
+const calculatePercentile = (arr, percentile) => {
+    const index = Math.ceil(percentile / 100 * arr.length) - 1;
+    return arr[index];
+};
+
+// Compute p5 and p25 values
+const p5Price = calculatePercentile(prices, 5);
+const p25Price = calculatePercentile(prices, 25);
+
+// Log the results
+console.log(`Average price: ${averagePrice.toFixed(2)}€`);
+console.log(`P5 price: ${p5Price.toFixed(2)}€`);
+console.log(`P25 price: ${p25Price.toFixed(2)}€`);
+
 
 // 🎯 TODO 12: Very old listed items
 // // 1. Log if we have very old items (true or false)
