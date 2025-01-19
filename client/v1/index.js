@@ -559,6 +559,15 @@ if (hasVeryOldItems) {
 
 console.log('🎯 TODO 13: Find a specific item')
 
+// The specific UUID to search for
+const targetUUID = "f2c5377c-84f9-571d-8712-98902dcbb913";
+
+// Find the item with the given UUID
+const specificItem = VINTED.find(item => item.uuid === targetUUID);
+
+// Log the item
+console.log("Specific item found:", specificItem);
+
 
 // 🎯 TODO 14: Delete a specific item
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
