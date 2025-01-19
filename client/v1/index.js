@@ -527,6 +527,31 @@ console.log(`P25 price: ${p25Price.toFixed(2)}€`);
 
 console.log('🎯 TODO 12: Very old listed items')
 
+// Helper function to calculate the difference in days between two dates
+const getDaysDifference = (date1, date2) => {
+    const msPerDay = 24 * 60 * 60 * 1000;
+    return Math.floor((date2 - date1) / msPerDay);
+};
+
+// Current date
+const currentDate = new Date();
+
+// Find items that are very old
+const veryOldItems = VINTED.filter(item => {
+    const publishedDate = new Date(item.published);
+    return getDaysDifference(publishedDate, currentDate) > 21; // More than 3 weeks
+});
+
+// Check if there are very old items
+const hasVeryOldItems = veryOldItems.length > 0;
+
+// Log the result
+console.log(`Very old items present: ${hasVeryOldItems}`);
+
+// Log the old items themselves, if any
+if (hasVeryOldItems) {
+    console.log('These are the very old items:', veryOldItems);
+}
 
 // 🎯 TODO 13: Find a specific item
 // 1. Find the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
@@ -539,7 +564,7 @@ console.log('🎯 TODO 13: Find a specific item')
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
 // 2. Log the new list of items
 
-// 🎯 TODO 5: Save a favorite item
+// 🎯 TODO 15: Save a favorite item
 // We declare and assign a variable called `sealedCamera`
 let sealedCamera = {
   link: "https://www.vinted.fr/items/5563396347-lego-43230-omaggio-a-walter-disney-misb",
@@ -570,7 +595,7 @@ sealedCamera = {
 // 3. Update `camera` property with `favorite` to true WITHOUT changing sealedCamera properties
 
 
-// 🎯 TODO 11: Compute the profitability
+// 🎯 TODO 16: Compute the profitability
 // From a specific deal called `deal`
 const deal = {
   'title':  'La caméra Hommage à Walt Disney',
