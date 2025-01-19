@@ -198,6 +198,12 @@ Object.keys(communities).forEach(community => {
 
 console.log('🎯 TODO 10: Sort by date for each community')
 
+Object.keys(communities).forEach(community => {
+    communities[community].sort((a, b) => new Date(a.published) - new Date(b.published));
+    console.log(`Sorted deals for ${community} by date (old to recent):`);
+    console.table(communities[community]);
+});
+
 
 
 /**
