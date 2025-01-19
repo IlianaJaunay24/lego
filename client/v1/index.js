@@ -122,6 +122,13 @@ console.table(filteredDeals);
 
 console.log('🎯 TODO 7: Average percentage discount')
 
+// 1. Calculate the average percentage discount
+const totalDiscount = deals.reduce((sum, deal) => sum + deal.discount, 0);
+const averageDiscount = totalDiscount / deals.length;
+
+// 2. Log the average discount
+console.log('The average percentage discount is : ', averageDiscount.toFixed(2), '%.');
+
 
 /**
  * 🏎
