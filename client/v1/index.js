@@ -573,6 +573,17 @@ console.log("Specific item found:", specificItem);
 // 1. Delete the item with the uuid `f2c5377c-84f9-571d-8712-98902dcbb913`
 // 2. Log the new list of items
 
+console.log('🎯 TODO 14: Delete a specific item')
+
+// The specific UUID to delete
+const targetUUIDToDelete = "f2c5377c-84f9-571d-8712-98902dcbb913";
+
+// Filter out the item with the given UUID
+const updatedVinted = VINTED.filter(item => item.uuid !== targetUUIDToDelete);
+
+// Log the new list of items
+console.log("Updated list of items:", updatedVinted);
+
 // 🎯 TODO 15: Save a favorite item
 // We declare and assign a variable called `sealedCamera`
 let sealedCamera = {
@@ -603,6 +614,9 @@ sealedCamera = {
 
 // 3. Update `camera` property with `favorite` to true WITHOUT changing sealedCamera properties
 
+console.log('🎯 TODO 15: Save a favorite item')
+
+
 
 // 🎯 TODO 16: Compute the profitability
 // From a specific deal called `deal`
@@ -615,6 +629,9 @@ const deal = {
 
 // 1. Compute the potential highest profitability based on the VINTED items
 // 2. Log the value
+
+console.log('🎯 TODO 16: Compute the profitability')
+
 
 
 
