@@ -657,7 +657,23 @@ const highestProfitability = VINTED
     }, 0);
 
 // 2. Log the value
-console.log(`The highest potential profitability for the deal is: €${highestProfitability.toFixed(2)}`);
+console.log(`The highest potential profitability for the deal is: ${highestProfitability.toFixed(2)}€`);
+
+
+//Correction 
+let maxProfit = 0;
+let bestItem = null;
+for (let item of VINTED) {
+    const profit = parseFloat(item.price) - deal.price;
+    if (profit > maxProfit) {
+        maxProfit = profit;
+        bestItem = item;
+    }
+}
+console.log('The highest potential profitability for the deal is: ',maxProfit, '€.');
+console.log('The item with highest potential profitability for the deal is: ', bestItem, '€.');
+
+
 
 
 /**
@@ -669,3 +685,9 @@ console.log(`The highest potential profitability for the deal is: €${highestPr
 // 🎯 LAST TODO: Save in localStorage
 // 1. Save MY_FAVORITE_DEALERS in the localStorage
 // 2. log the localStorage
+
+// 1. Save MY_FAVORITE_DEALERS in the localStorage
+localStorage.setItem('MY_FAVORITE_DEALERS', JSON.stringify(MY_FAVORITE_DEALERS));
+
+// 2. Log the localStorage
+console.log('LocalStorage:', JSON.parse(localStorage.getItem('MY_FAVORITE_DEALERS')));
