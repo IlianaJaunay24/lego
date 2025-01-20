@@ -648,7 +648,16 @@ const deal = {
 
 console.log('🎯 TODO 16: Compute the profitability');
 
+// 1. Compute the potential highest profitability based on the VINTED items
+const highestProfitability = VINTED
+    .filter(item => item.title.includes(deal.legoId)) // Filter items related to the deal's LEGO ID
+    .reduce((maxProfit, item) => {
+        const profit = parseFloat(item.price) - deal.price; // Calculate profit for the current item
+        return profit > maxProfit ? profit : maxProfit; // Update maxProfit if current profit is higher
+    }, 0);
 
+// 2. Log the value
+console.log(`The highest potential profitability for the deal is: €${highestProfitability.toFixed(2)}`);
 
 
 /**
