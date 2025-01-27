@@ -157,3 +157,46 @@ document.addEventListener('DOMContentLoaded', async () => {
   setCurrentDeals(deals);
   render(currentDeals, currentPagination);
 });
+
+
+
+
+
+
+
+
+//Feature 1 - Browse pages
+
+/**
+ * Select a page to display
+ */
+selectPage.addEventListener('change', async (event) => {
+    const selectedPage = parseInt(event.target.value); // Get the selected page
+    const deals = await fetchDeals(selectedPage, currentPagination.size); // Fetch deals for the selected page
+
+    setCurrentDeals(deals); // Update global data
+    render(currentDeals, currentPagination); // Render the updated data
+});
+
+/**
+ * Handle changes in the number of deals displayed per page
+ */
+selectShow.addEventListener('change', async (event) => {
+    const size = parseInt(event.target.value); // New number of deals per page
+    const totalPages = Math.ceil(currentPagination.count / size); // Recalculate total number of pages
+    const newPage = Math.min(currentPagination.currentPage, totalPages); // Adjust current page if it exceeds total pages
+
+    if (newPage !== currentPagination.currentPage) {
+        alert(`The current page exceeds the total number of pages. Redirecting to page ${newPage}.`);
+    }
+
+    const deals = await fetchDeals(newPage, size); // Fetch deals with new page size
+
+    setCurrentDeals(deals); // Update global data
+    render(currentDeals, currentPagination); // Render the updated data
+});
+
+
+
+
+
