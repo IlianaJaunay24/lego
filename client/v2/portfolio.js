@@ -151,12 +151,7 @@ selectShow.addEventListener('change', async (event) => {
   render(currentDeals, currentPagination);
 });
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const deals = await fetchDeals();
 
-  setCurrentDeals(deals);
-  render(currentDeals, currentPagination);
-});
 
 
 
@@ -194,6 +189,75 @@ selectShow.addEventListener('change', async (event) => {
 
     setCurrentDeals(deals); // Update global data
     render(currentDeals, currentPagination); // Render the updated data
+});
+
+
+//Feature 2 - Filter by best discount
+
+
+/**
+ * Filter deals by best discount (discount > 50%)
+ * @param {Array} deals - All deals to filter
+ * @return {Array} - Filtered deals
+ */
+const filterByBestDiscount = (deals) => {
+    return deals.filter(deal => deal.discount > 50);
+};
+
+// Add an event listener to the "By Best Discount" checkbox
+const bestDiscountCheckbox = document.querySelector('#best-discount');
+
+// Keep track of the best discount filter state
+let isBestDiscountEnabled = false;
+
+bestDiscountCheckbox.addEventListener('change', async (event) => {
+    isBestDiscountEnabled = event.target.checked; // Update the filter state
+
+    const deals = await fetchDeals(1, currentPagination.size); // Fetch the first page with the selected size
+    const filteredDeals = isBestDiscountEnabled
+        ? filterByBestDiscount(deals.result)
+        : deals.result;
+
+    // Update global state and re-render
+    setCurrentDeals({ result: filteredDeals, meta: currentPagination });
+    render(currentDeals, currentPagination);
+});
+
+// Handle page changes while keeping the filter active
+selectPage.addEventListener('change', async (event) => {
+    const selectedPage = parseInt(event.target.value); // Get the selected page number
+    const deals = await fetchDeals(selectedPage, currentPagination.size);
+
+    const filteredDeals = isBestDiscountEnabled
+        ? filterByBestDiscount(deals.result)
+        : deals.result;
+
+    // Update global state and re-render
+    setCurrentDeals({ result: filteredDeals, meta: currentPagination });
+    render(currentDeals, currentPagination);
+});
+
+// Handle size changes while keeping the filter active
+selectShow.addEventListener('change', async (event) => {
+    const selectedSize = parseInt(event.target.value); // Get the selected size
+    const deals = await fetchDeals(1, selectedSize); // Always reset to page 1 when size changes
+
+    const filteredDeals = isBestDiscountEnabled
+        ? filterByBestDiscount(deals.result)
+        : deals.result;
+
+    // Update global state and re-render
+    setCurrentDeals({ result: filteredDeals, meta: currentPagination });
+    render(currentDeals, currentPagination);
+});
+
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const deals = await fetchDeals();
+
+    setCurrentDeals(deals);
+    render(currentDeals, currentPagination);
 });
 
 
