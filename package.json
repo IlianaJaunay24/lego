@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "delay": "^6.0.0",
+    "p-queue": "^8.1.0"
+  }
+}
