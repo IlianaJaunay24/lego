@@ -1,36 +1,9 @@
-/*const cors = require('cors');
-const express = require('express');
-const helmet = require('helmet');
-
-const PORT = 8092;
-
-const app = express();
-
-module.exports = app;
-
-app.use(require('body-parser').json());
-app.use(cors());
-app.use(helmet());
-
-app.options('*', cors());
-
-app.get('/', (request, response) => {
-  response.send({'ack': true});
-});
-
-app.listen(PORT);
-
-console.log(`📡 Running on port ${PORT}`);
-
-*/
-
 import express from 'express';
 import { MongoClient, ObjectId } from 'mongodb';
 
 const app = express();
 const PORT = 8092;
 
-// Connexion à MongoDB
 const MONGODB_URI = 'mongodb+srv://ilianajaunay:onreteste@cluster0.khrt7c4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const MONGODB_DB_NAME = 'Lego2';
 
@@ -51,6 +24,7 @@ app.get('/', (req, res) => {
   res.send({ ack: true });
 });
 
+// 1) GET /deals/:id
 app.get('/deals/:id', async (req, res) => {
   try {
     const deal = await db.collection('deals').findOne({ _id: new ObjectId(req.params.id) });
@@ -61,10 +35,9 @@ app.get('/deals/:id', async (req, res) => {
   }
 });
 
+// 2) GET /deals/search
 app.get('/deals/search', async (req, res) => {
-  if (!db) {
-    return res.status(503).send({ error: 'Database not ready yet' });
-  }
+  if (!db) return res.status(503).send({ error: 'Database not ready yet' });
 
   try {
     const limit = parseInt(req.query.limit) || 12;
@@ -72,33 +45,29 @@ app.get('/deals/search', async (req, res) => {
     const date = req.query.date;
     const filterBy = req.query.filterBy;
 
-    const query = {};
+    const query = { source: 'dealabs' };
 
     if (!isNaN(price)) {
-      query.price = { $lte: price }; // prix inférieur ou égal
+      query.price = { $lte: price };
     }
 
     if (date) {
-      // Supposons que le champ s'appelle `date` et soit une string ISO
-      query.date = date;
+      query.published = { $gte: new Date(date).toISOString() };
     }
 
-    if (filterBy) {
-      switch (filterBy) {
-        case 'best-discount':
-          // exemple fictif, tu dois adapter selon ton schéma MongoDB
-          query.discount = { $exists: true };
-          break;
-        case 'most-commented':
-          query.comments = { $exists: true };
-          break;
-        // Ajoute d'autres filtres ici si besoin
-      }
+    if (filterBy === 'best-discount') {
+      query.discount = { $ne: null };
+    } else if (filterBy === 'most-commented') {
+      query.comments = { $ne: null };
     }
+
+    const sort = filterBy === 'best-discount' ? { discount: -1 }
+                : filterBy === 'most-commented' ? { comments: -1 }
+                : { price: 1 };
 
     const results = await db.collection('deals')
       .find(query)
-      .sort({ price: 1 }) // tri croissant
+      .sort(sort)
       .limit(limit)
       .toArray();
 
@@ -108,6 +77,30 @@ app.get('/deals/search', async (req, res) => {
   }
 });
 
+// 3) GET /sales/search
+app.get('/sales/search', async (req, res) => {
+  if (!db) return res.status(503).send({ error: 'Database not ready yet' });
+
+  try {
+    const limit = parseInt(req.query.limit) || 12;
+    const legoSetId = req.query.legoSetId;
+
+    const query = { source: 'vinted' };
+    if (legoSetId) {
+      query.title = { $regex: legoSetId };
+    }
+
+    const results = await db.collection('deals')
+      .find(query)
+      .sort({ published: -1 })
+      .limit(limit)
+      .toArray();
+
+    res.send({ results });
+  } catch (e) {
+    res.status(500).send({ error: 'Error while searching sales' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);

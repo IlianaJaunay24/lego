@@ -1,0 +1,1 @@
+Les fichiers de client/v2 sont à la fois ceux de vercel qui n'ont malheureusement pas fonctionné, et ceux du frontendde début de semestre que j'ai donc amélioré selon ce que je souhaitais faire dans l'api.

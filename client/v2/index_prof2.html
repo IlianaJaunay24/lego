@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>🧱 Lego | Predictability of a lego set deal</title>
+    <link rel="stylesheet" href="style_prof.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Lego Deals Analyzer</h1>
+    </header>
+
+    <section id="options">
+      <div class="filter-group">
+        <label><input type="checkbox" id="best-discount" /> Best Discount (>50%)</label>
+        <label><input type="checkbox" id="low-percentile" /> Low Percentile (≤ 25)</label>
+        <label><input type="checkbox" id="high-profit" /> High Profit (≥ 10€)</label>
+        <label for="sort-select">Sort:</label>
+        <select name="sort" id="sort-select">
+          <option value="price-asc">Cheaper</option>
+          <option value="price-desc">Expensive</option>
+          <option value="score-desc">Best Score</option>
+          <option value="profit-desc">Most Profitable</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="deals"></section>
+
+    <div id="pagination-buttons">
+      <button id="prev-page">Previous</button>
+      <button id="next-page">Next</button>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="portfolio_prof.js"></script>
+  </body>
+</html>

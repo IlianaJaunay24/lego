@@ -323,7 +323,7 @@ async function goVinted(LEGO_SET_IDS){//,retailById) {
   const [,, eshop] = process.argv;
 
   await sandboxDealabs(eshop); // Ajout du "await" ici
-  
+
   // 2. Extraire dynamiquement les IDs LEGO + retail par ID
   const extractLegoIds = (deals) => {
     const regex = /\b\d{5}\b/g;
@@ -352,7 +352,7 @@ async function goVinted(LEGO_SET_IDS){//,retailById) {
   console.log(`🧩 Extracted ${LEGO_SET_IDS.length} LEGO IDs\n`, LEGO_SET_IDS);
 
 
-  await goVinted(LEGO_SET_IDS);
+  //await goVinted(LEGO_SET_IDS);
 
   // 👉 Fusionner les deux sources
   const allDeals = [

@@ -87,7 +87,7 @@ function formatImage(imageUrl) {
 }
 
 const parse = (data) => {
-    const $ = cheerio.load(data, { xmlMode: true });
+    const $ = cheerio.load(data, { xmlMode: false });
 
     return $('div.js-threadList article')
         .map((i, element) => {
@@ -99,11 +99,13 @@ const parse = (data) => {
             const price = thread.price;
             const discount = parseInt((retail - price) / retail * 100);
             const temperature = +thread.temperature;
-            const photo = thread.mainImage || null;
+            //const photo = thread.mainImage || null;
             const comments = +thread.commentCount;
             const published = thread.publishedAt;
             const title = thread.title;
             const id = thread.threadId;
+
+            const photo = thread.mainImage ? `https://static.dealabs.com/${thread.mainImage.path}/${thread.mainImage.uid}` : null;
 
             return {
                 link,
@@ -128,7 +130,6 @@ module.exports.scrape = async (baseUrl) => {
 
     while (hasMore) {
         const url = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}page=${page}`;
-        console.log(`🔄 Scraping Dealabs page ${page}: ${url}`);
 
         const response = await fetch(url, {
             headers: {
