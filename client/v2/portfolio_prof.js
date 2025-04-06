@@ -4,11 +4,14 @@ let currentDeals = [];
 let currentPagination = {};
 let currentPage = 1;
 
-const selectLegoSetIds = document.querySelector('#lego-set-id-select');
 const selectSort = document.querySelector('#sort-select');
 const sectionDeals = document.querySelector('#deals');
 const btnPrev = document.querySelector('#prev-page');
 const btnNext = document.querySelector('#next-page');
+
+const checkBestDiscount = document.querySelector('#best-discount');
+const checkLowPercentile = document.querySelector('#low-percentile');
+const checkHighProfit = document.querySelector('#high-profit');
 
 const setCurrentDeals = ({ result, meta }) => {
   currentDeals = result;
@@ -51,7 +54,6 @@ const fetchSalesStats = async legoId => {
       p20,
       nbSales: prices.length
     };
-
   } catch (err) {
     console.error(`Erreur ventes pour ${legoId}`, err);
     return null;
@@ -89,26 +91,30 @@ const sortDeals = (deals, criterion) => {
   }
 };
 
-const renderDeals = deals => {
-  const fragment = document.createDocumentFragment();
+const applyFilters = deals => {
+  return deals.filter(deal => {
+    const discountCondition = !checkBestDiscount.checked || deal.discount > 50;
+    const percentileCondition = !checkLowPercentile.checked || (deal.p20 && parseFloat(deal.p20) <= 25);
+    const profitCondition = !checkHighProfit.checked || (deal.profit && parseFloat(deal.profit) >= 10);
+    return discountCondition && percentileCondition && profitCondition;
+  });
+};
+
+const renderDeals = (deals, pagination) => {
   const div = document.createElement('div');
+  const filteredDeals = applyFilters(deals);
+  const nbDealsOnPage = filteredDeals.length;
 
-  const nbDealsOnPage = deals.length;
-
-  const template = deals.map(deal => {
+  const template = filteredDeals.map(deal => {
     const isHot = deal.discount > 50;
     const isProfit = deal.profit && parseFloat(deal.profit) >= 10;
 
     return `
       <div class="deal" id="${deal.uuid}">
-        <div class="deal-header">
-          <img class="deal-image" src="${deal.photo ?? 'https://via.placeholder.com/140'}" alt="${deal.title}">
-          <div>
-            <h3><a href="${deal.link}" target="_blank">${deal.title}</a></h3>
-            <p><strong>ID:</strong> ${deal.id}</p>
-          </div>
-        </div>
-        <div class="deal-body">
+        <img class="deal-image" src="${deal.photo ?? 'https://via.placeholder.com/140'}" alt="${deal.title}">
+        <div class="deal-info">
+          <h3 class="deal-title"><a href="${deal.link}" target="_blank">${deal.title}</a></h3>
+          <p><strong>ID:</strong> ${deal.id}</p>
           <p><strong>Price:</strong> ${deal.price} €</p>
           <p><strong>Discount:</strong> ${deal.discount ?? 0} % ${isHot ? '<span class="badge badge-hot">🔥 HOT</span>' : ''}</p>
           <p><strong>Temperature:</strong> ${deal.temperature ?? 'N/A'}°</p>
@@ -124,20 +130,13 @@ const renderDeals = deals => {
   div.innerHTML = template;
   sectionDeals.innerHTML = `<h2>Deals <span class="badge badge-count">${nbDealsOnPage} shown</span></h2>`;
   sectionDeals.appendChild(div);
-};
 
-const renderLegoSetIds = deals => {
-  const ids = [...new Set(deals.map(d => d.id))];
-  selectLegoSetIds.innerHTML = ids.map(id => `<option value="${id}">${id}</option>`).join('');
+  btnPrev.disabled = currentPage <= 1;
+  btnNext.disabled = currentPage >= (pagination.pageCount || 1);
 };
 
 const render = async (deals, pagination) => {
-  await renderDeals(deals);
-  renderLegoSetIds(deals);
-
-  // Désactivation dynamique des boutons
-  btnPrev.disabled = currentPage <= 1;
-  btnNext.disabled = currentPage >= (pagination.pageCount || 1);
+  renderDeals(deals, pagination);
 };
 
 const reload = async () => {
@@ -161,10 +160,13 @@ btnNext.addEventListener('click', async () => {
 });
 
 selectSort.addEventListener('change', async () => {
-  const criterion = selectSort.value;
-  const sorted = sortDeals([...currentDeals], criterion);
-  await renderDeals(sorted);
+  await render(currentDeals, currentPagination);
 });
+
+// Ajout écouteurs sur checkboxes pour actualiser l'affichage
+[checkBestDiscount, checkLowPercentile, checkHighProfit].forEach(checkbox =>
+  checkbox.addEventListener('change', () => render(currentDeals, currentPagination))
+);
 
 document.addEventListener('DOMContentLoaded', async () => {
   currentPage = 1;
