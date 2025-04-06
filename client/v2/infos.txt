@@ -1,1 +1,1 @@
-Les fichiers de client/v2 sont à la fois ceux de vercel qui n'ont malheureusement pas fonctionné, et ceux du frontendde début de semestre que j'ai donc amélioré selon ce que je souhaitais faire dans l'api.
+Les fichiers de client/v2 sont à la fois ceux de vercel qui n'ont malheureusement pas fonctionné, et ceux du frontend de début de semestre que j'ai donc améliorés selon ce que je souhaitais faire dans l'api. les fichiers utilisés pour votre API sont index_prof2, style_prof, utils et portfolio_prof.
